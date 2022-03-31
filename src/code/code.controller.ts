@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CodeService } from './code.service';
 import { CreateCodeDto } from './dto/create-code.dto';
 import { UpdateCodeDto } from './dto/update-code.dto';
@@ -17,14 +25,9 @@ export class CodeController {
     return this.codeService.findAll();
   }
 
-  @Get('js')
-  execJs() {
-    return this.codeService.execJs();
-  }
-
-  @Get('python')
-  execPython() {
-    return this.codeService.execPython();
+  @Post('exec')
+  execCode(@Body() createCodeDto: CreateCodeDto) {
+    return this.codeService.execCode(createCodeDto);
   }
 
   @Get(':id')

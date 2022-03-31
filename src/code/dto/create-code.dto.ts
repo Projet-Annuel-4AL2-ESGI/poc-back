@@ -1,1 +1,4 @@
-export class CreateCodeDto {}
+export class CreateCodeDto {
+  type: string;
+  content: string;
+}

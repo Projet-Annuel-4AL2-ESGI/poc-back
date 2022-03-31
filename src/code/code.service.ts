@@ -3,6 +3,7 @@ import { CreateCodeDto } from './dto/create-code.dto';
 import { UpdateCodeDto } from './dto/update-code.dto';
 import { promisify } from 'util';
 import { exec } from 'child_process';
+import * as fs from 'fs';
 
 @Injectable()
 export class CodeService {
@@ -14,12 +15,16 @@ export class CodeService {
     return `This action returns all code`;
   }
 
-  async execJs() {
-    return await this.run_shell_command('node exec/exectest.js');
-  }
-
-  async execPython() {
-    return await this.run_shell_command('python exec/pttest.py');
+  async execCode(createCodeDto: CreateCodeDto) {
+    await fs.writeFileSync(
+      'exec/code.' + createCodeDto.type,
+      createCodeDto.content,
+    );
+    if (createCodeDto.type == 'py') {
+      return await this.run_shell_command('python exec/code.py');
+    } else if (createCodeDto.type == 'js') {
+      return await this.run_shell_command('node exec/code.js');
+    }
   }
 
   findOne(id: number) {
