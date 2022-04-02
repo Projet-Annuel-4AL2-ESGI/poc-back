@@ -6,6 +6,7 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import { options } from "tsconfig-paths/lib/options";
 
 @Injectable()
 export class UserService {
@@ -18,30 +19,22 @@ export class UserService {
     return this.userRepository.save(createUserDto);
   }
 
-  async run_shell_command(command) {
-    const execProm = promisify(exec);
-    let result;
-    try {
-      result = await execProm(command);
-    } catch (ex) {
-      result = ex;
-    }
-    if (Error[Symbol.hasInstance](result)) return result.stderr;
-
-    return result.stdout;
-  }
-
   async findAll() {
-    return await this.run_shell_command('node exec/exectest.js');
-    //return this.userRepository.find();
+    return this.userRepository.find();
   }
 
   findOne(id: number) {
     return this.userRepository.findOne(id);
   }
 
+  findByMail(email: string) {
+    return this.userRepository.findOne({
+      where: { email: email },
+    });
+  }
+
   update(id: number, updateUserDto: UpdateUserDto) {
-    return this.userRepository.save({ id: id, name: updateUserDto.name });
+    return this.userRepository.save({ id: id, email: updateUserDto.email });
   }
 
   remove(id: number) {
