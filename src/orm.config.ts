@@ -7,5 +7,6 @@ export const config: TypeOrmModuleOptions = {
   host: 'ec2-99-80-170-190.eu-west-1.compute.amazonaws.com',
   database: 'd6gg3357g0fds0',
   synchronize: true,
+  ssl: true,
   entities: ['dist/**/*.entity{.ts,.js}'],
 };
