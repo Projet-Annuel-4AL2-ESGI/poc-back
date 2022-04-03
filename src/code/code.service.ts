@@ -12,7 +12,7 @@ export class CodeService {
   }
 
   findAll() {
-    return `This action returns all the code`;
+    return `This action returns all  the code`;
   }
 
   async execCode(createCodeDto: CreateCodeDto) {
