@@ -38,7 +38,7 @@ export class UserService {
   }
 
   addImage(id: number, image: string) {
-    return this.userRepository.save({id: id, image: image});
+    return this.userRepository.update(id, { image: image });
   }
 
   remove(id: number) {

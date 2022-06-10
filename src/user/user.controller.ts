@@ -35,15 +35,18 @@ export class UserController {
       }),
     }),
   )
-  uploadFile(@UploadedFile() file: Express.Multer.File, @Param('id') id: number) {
+  uploadFile(
+    @UploadedFile() file: Express.Multer.File,
+    @Param('id') id: number,
+  ) {
     console.log(file);
-    console.log(this.userService.addImage(id, file.filename));
+    this.userService.addImage(id, file.filename);
   }
 
-  /*@Get()
+  @Get()
   findAll() {
     return this.userService.findAll();
-  }*/
+  }
 
   @Get(':id')
   findOne(@Param('id') id: number) {
@@ -55,15 +58,15 @@ export class UserController {
     return this.userService.findByMail(email);
   }
 
-  @Get('user/avatar')
-  getFileCustomizedResponse(@Res({ passthrough: true }) res): StreamableFile {
+  @Get(':id/avatar')
+  async getFileCustomizedResponse(@Res({ passthrough: true }) res, @Param('id') id: number): Promise<StreamableFile> {
+    const user = await this.userService.findOne(id);
     const file = createReadStream(
-      join(process.cwd(), 'userimages/42d538560f31c9a6f147590e646b9def'),
+      join(process.cwd(), `userimages/${user.image}`),
     );
     res.set({
-      'Content-Type': 'image/jpeg"',
-      'Content-Disposition':
-        'attachment; filename="42d538560f31c9a6f147590e646b9def',
+      'Content-Type': 'image/*',
+      'Content-Disposition': `attachment; filename=${user.image}`,
     });
     return new StreamableFile(file);
   }
