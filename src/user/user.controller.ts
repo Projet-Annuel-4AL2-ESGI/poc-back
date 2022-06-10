@@ -29,6 +29,9 @@ export class UserController {
     FileInterceptor('image', {
       storage: diskStorage({
         destination: 'userimages',
+        filename: function (req, file, cb) {
+          cb(null, file.filename + '.' + file.mimetype.split('/')[1])
+        }
       }),
     }),
   )
