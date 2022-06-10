@@ -5,15 +5,18 @@ import {
   Get,
   Param,
   Patch,
-  Post,
+  Post, Res,
+  StreamableFile,
   UploadedFile,
-  UseInterceptors,
-} from '@nestjs/common';
+  UseInterceptors
+} from "@nestjs/common";
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { createReadStream } from 'fs';
+import { join } from 'path';
 
 @Controller('user')
 export class UserController {
@@ -29,9 +32,6 @@ export class UserController {
     FileInterceptor('image', {
       storage: diskStorage({
         destination: 'userimages',
-        filename: function (req, file, cb) {
-          cb(null, file.filename + '.' + file.mimetype.split('/')[1])
-        }
       }),
     }),
   )
@@ -52,6 +52,19 @@ export class UserController {
   @Get('/mail/:email')
   findOneByMail(@Param('email') email: string) {
     return this.userService.findByMail(email);
+  }
+
+  @Get('stream-file-customize/image')
+  getFileCustomizedResponse(@Res({ passthrough: true }) res): StreamableFile {
+    const file = createReadStream(
+      join(process.cwd(), 'userimages/42d538560f31c9a6f147590e646b9def'),
+    );
+    res.set({
+      'Content-Type': 'image/jpeg"',
+      'Content-Disposition':
+        'attachment; filename="42d538560f31c9a6f147590e646b9def',
+    });
+    return new StreamableFile(file);
   }
 
   @Patch(':id')
