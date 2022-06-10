@@ -4,4 +4,5 @@ export class CreateUserDto {
   username?: string;
   password: string;
   followers?: number[];
+  image?: string;
 }

@@ -27,7 +27,7 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @Post('upload')
+  @Post('upload/:id')
   @UseInterceptors(
     FileInterceptor('image', {
       storage: diskStorage({
@@ -35,8 +35,9 @@ export class UserController {
       }),
     }),
   )
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
+  uploadFile(@UploadedFile() file: Express.Multer.File, @Param('id') id: number) {
     console.log(file);
+    console.log(this.userService.addImage(id, file.filename));
   }
 
   /*@Get()
@@ -54,7 +55,7 @@ export class UserController {
     return this.userService.findByMail(email);
   }
 
-  @Get('stream-file-customize/image')
+  @Get('user/avatar')
   getFileCustomizedResponse(@Res({ passthrough: true }) res): StreamableFile {
     const file = createReadStream(
       join(process.cwd(), 'userimages/42d538560f31c9a6f147590e646b9def'),
