@@ -5,9 +5,10 @@ import { CodeModule } from './code/code.module';
 import { config } from './orm.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
+import { FollowModule } from './follow/follow.module';
 
 @Module({
-  imports: [CodeModule, TypeOrmModule.forRoot(config), UserModule],
+  imports: [CodeModule, TypeOrmModule.forRoot(config), UserModule, FollowModule],
   controllers: [AppController],
   providers: [AppService],
 })

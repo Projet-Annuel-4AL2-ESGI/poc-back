@@ -6,10 +6,14 @@ import {
   Param,
   Patch,
   Post,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @Controller('user')
 export class UserController {
@@ -20,14 +24,31 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @Get()
+  @Post('upload')
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: diskStorage({
+        destination: 'userimages',
+      }),
+    }),
+  )
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+    console.log(file);
+  }
+
+  /*@Get()
   findAll() {
     return this.userService.findAll();
-  }
+  }*/
 
   @Get(':id')
   findOne(@Param('id') id: number) {
     return this.userService.findOne(+id);
+  }
+
+  @Get('/mail/:email')
+  findOneByMail(@Param('email') email: string) {
+    return this.userService.findByMail(email);
   }
 
   @Patch(':id')
