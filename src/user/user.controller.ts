@@ -5,11 +5,12 @@ import {
   Get,
   Param,
   Patch,
-  Post, Res,
+  Post,
+  Res,
   StreamableFile,
   UploadedFile,
-  UseInterceptors
-} from "@nestjs/common";
+  UseInterceptors,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -17,6 +18,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { createReadStream } from 'fs';
 import { join } from 'path';
+import * as fs from 'fs';
 
 @Controller('user')
 export class UserController {
@@ -59,16 +61,22 @@ export class UserController {
   }
 
   @Get(':id/avatar')
-  async getFileCustomizedResponse(@Res({ passthrough: true }) res, @Param('id') id: number): Promise<StreamableFile> {
+  async getFileCustomizedResponse(
+    @Res({ passthrough: true }) res,
+    @Param('id') id: number,
+  ): Promise<StreamableFile> {
     const user = await this.userService.findOne(id);
     const file = createReadStream(
       join(process.cwd(), `userimages/${user.image}`),
     );
     res.set({
       'Content-Type': 'image/*',
-      'Content-Disposition': `attachment; filename=${user.image}`,
+      //'Content-Disposition': `attachment; filename=${user.image}`,
     });
+    //const base = fs.readFileSync(`userimages/${user.image}`);
+    //console.log(base.toString('base64'));
     return new StreamableFile(file);
+    //return base.toString('base64');
   }
 
   @Patch(':id')
