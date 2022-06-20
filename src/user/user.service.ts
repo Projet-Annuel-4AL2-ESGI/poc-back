@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { GetUsers } from './dto/get-users';
 
 @Injectable()
 export class UserService {
@@ -20,7 +21,16 @@ export class UserService {
   }
 
   async findAll() {
-    return this.userRepository.find();
+    const users = await this.userRepository.find();
+    const usersFiltered: GetUsers[] = [];
+    users.forEach(function (user) {
+      const userTemp: GetUsers = {
+        id: user.id,
+        username: user.username,
+      };
+      usersFiltered.push(userTemp);
+    });
+    return usersFiltered;
   }
 
   findOne(id: number) {
