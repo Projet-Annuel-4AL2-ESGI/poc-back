@@ -8,9 +8,9 @@ import {
   Post,
   Res,
   StreamableFile,
-  UploadedFile,
-  UseInterceptors,
-} from '@nestjs/common';
+  UploadedFile, UseGuards,
+  UseInterceptors
+} from "@nestjs/common";
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -19,6 +19,8 @@ import { diskStorage } from 'multer';
 import { createReadStream } from 'fs';
 import { join } from 'path';
 import * as fs from 'fs';
+import { JwtStrategy } from "../auth/strategy/jwt.strategy";
+import { JwtAuthGuard } from "../auth/guard/jwt-auth.guard";
 
 @Controller('user')
 export class UserController {
