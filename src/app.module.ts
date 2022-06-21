@@ -7,10 +7,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { FollowModule } from './follow/follow.module';
 import { PostModule } from './post/post.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     CodeModule,
+    AuthModule,
     TypeOrmModule.forRoot(config),
     UserModule,
     FollowModule,
