@@ -7,7 +7,7 @@ import { JwtStrategy } from "../auth/strategy/jwt.strategy";
 import { PassportModule } from "@nestjs/passport";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([User]),],
   controllers: [UserController],
   providers: [UserService],
   exports: [UserService],
