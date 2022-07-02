@@ -24,8 +24,7 @@ import { JwtAuthGuard } from "../auth/guard/jwt-auth.guard";
 
 @Controller('user')
 export class UserController {
-  constructor(
-    private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
