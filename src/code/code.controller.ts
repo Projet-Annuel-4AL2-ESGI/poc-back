@@ -12,7 +12,9 @@ import { CodeService } from './code.service';
 import { CreateCodeDto } from './dto/create-code.dto';
 import { UpdateCodeDto } from './dto/update-code.dto';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('code')
 @Controller('code')
 export class CodeController {
   constructor(private readonly codeService: CodeService) {}
