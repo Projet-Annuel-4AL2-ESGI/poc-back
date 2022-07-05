@@ -21,7 +21,9 @@ import { join } from 'path';
 import * as fs from 'fs';
 import { JwtStrategy } from "../auth/strategy/jwt.strategy";
 import { JwtAuthGuard } from "../auth/guard/jwt-auth.guard";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags('users')
 @Controller('user')
 export class UserController {
   constructor(
