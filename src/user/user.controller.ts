@@ -23,6 +23,7 @@ import { JwtStrategy } from "../auth/strategy/jwt.strategy";
 import { JwtAuthGuard } from "../auth/guard/jwt-auth.guard";
 import { ApiTags } from "@nestjs/swagger";
 import { UpdateImageDto } from "./dto/update-image.dto";
+import { ApiTags } from "@nestjs/swagger";
 
 @ApiTags('user')
 @Controller('user')
