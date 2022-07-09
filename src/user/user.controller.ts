@@ -54,9 +54,19 @@ export class UserController {
     return this.userService.findAll();
   }
 
+  @Get('follow/:id')
+  findFollow(@Param('id') id: number) {
+    return this.userService.findFollows(id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: number) {
     return this.userService.findOne(+id);
+  }
+
+  @Get('/profile/:id')
+  findOneProfile(@Param('id') id: number) {
+    return this.userService.findOneProfile(+id);
   }
 
   @Get('/mail/:email')
