@@ -8,7 +8,7 @@ import * as bcrypt from 'bcrypt';
 import { GetUsers } from './dto/get-users';
 import { Follow } from '../follow/entities/follow.entity';
 import { GetUsersFollow } from './dto/get-users-follow';
-import { GetUserProfile } from "./dto/get-user-profile";
+import { GetUserProfile } from './dto/get-user-profile';
 
 @Injectable()
 export class UserService {
@@ -86,7 +86,7 @@ export class UserService {
     const followingLenght = await this.followRepository.find({
       where: { follower: id },
     });
-    const followerLenght = await this.followRepository.find( {
+    const followerLenght = await this.followRepository.find({
       where: { following: id },
     });
 

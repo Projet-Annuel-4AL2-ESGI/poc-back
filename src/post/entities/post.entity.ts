@@ -8,6 +8,9 @@ export class Post {
   @Column({ type: 'varchar', length: 100, nullable: false })
   type: string;
 
+  @Column({ type: 'int', nullable: true })
+  userId: number;
+
   @Column({ type: 'varchar', length: 100, nullable: false })
   title: string;
 
@@ -17,6 +20,6 @@ export class Post {
   @Column({ type: 'int', nullable: false })
   likes: number;
 
-  @Column({ type: 'varchar', length: 100, nullable: false })
+  @Column({ type: 'varchar', nullable: true })
   image: string;
 }

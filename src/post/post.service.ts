@@ -4,23 +4,34 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Post } from './entities/post.entity';
+import { User } from '../user/entities/user.entity';
+import { GetPostDto } from './dto/get-post.dto';
 
 @Injectable()
 export class PostService {
   constructor(
     @InjectRepository(Post)
     private postRepository: Repository<Post>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
   ) {}
   create(createPostDto: CreatePostDto) {
     return this.postRepository.save(createPostDto);
   }
 
-  findAll() {
-    return this.postRepository.find();
+  async findAll() {
+    const posts = await this.postRepository.find();
+    const getPosts: GetPostDto[] = [];
+    for (const post of posts) {
+      const getPost = await this.mapPostToGet(post);
+      getPosts.push(getPost);
+    }
+    return getPosts;
   }
 
-  findOne(id: number) {
-    return this.postRepository.findOne(id);
+  async findOne(id: number) {
+    const post = await this.postRepository.findOne(id);
+    return await this.mapPostToGet(post);
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
@@ -29,12 +40,35 @@ export class PostService {
       type: updatePostDto.type,
       title: updatePostDto.title,
       description: updatePostDto.description,
-      likes: updatePostDto.likes,
       image: updatePostDto.image,
     });
   }
 
   remove(id: number) {
     return this.postRepository.delete(id);
+  }
+
+  async mapPostToGet(post: CreatePostDto) {
+    let userId = null;
+    let userName = null;
+    let userImage = null;
+    if (post.userId != null) {
+      const user = await this.userRepository.findOne(post.userId);
+      userId = user.id;
+      userName = user.username;
+      userImage = user.image;
+    }
+    const getPost: GetPostDto = {
+      id: post.id,
+      type: post.type,
+      userId: userId,
+      userName: userName,
+      title: post.title,
+      description: post.description,
+      likes: post.likes,
+      userImage: userImage,
+      image: post.image,
+    };
+    return getPost;
   }
 }
