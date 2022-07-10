@@ -9,6 +9,7 @@ import { GetUsers } from './dto/get-users';
 import { Follow } from '../follow/entities/follow.entity';
 import { GetUsersFollow } from './dto/get-users-follow';
 import { GetUserProfile } from './dto/get-user-profile';
+import { UpdateImageDto } from "./dto/update-image.dto";
 
 @Injectable()
 export class UserService {
@@ -32,6 +33,7 @@ export class UserService {
       const userTemp: GetUsers = {
         id: user.id,
         username: user.username,
+        image: user.image,
       };
       usersFiltered.push(userTemp);
     });
@@ -51,6 +53,7 @@ export class UserService {
           id: user.id,
           username: user.username,
           follow: false,
+          image: user.image,
         };
         usersFiltered.push(userTemp);
       });
@@ -66,6 +69,7 @@ export class UserService {
             id: user.id,
             username: user.username,
             follow: false,
+            image: user.image,
           };
           if (user.id != id) {
             usersFiltered.push(userTemp);
@@ -112,8 +116,8 @@ export class UserService {
     return this.userRepository.save({ id: id, email: updateUserDto.email });
   }
 
-  addImage(id: number, image: string) {
-    return this.userRepository.update(id, { image: image });
+  addImage(id: number, updateImageDto: UpdateImageDto) {
+    return this.userRepository.update(id, { image: updateImageDto.image });
   }
 
   remove(id: number) {

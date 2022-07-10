@@ -21,6 +21,7 @@ import { join } from 'path';
 import * as fs from 'fs';
 import { JwtStrategy } from "../auth/strategy/jwt.strategy";
 import { JwtAuthGuard } from "../auth/guard/jwt-auth.guard";
+import { UpdateImageDto } from "./dto/update-image.dto";
 
 @Controller('user')
 export class UserController {
@@ -32,19 +33,8 @@ export class UserController {
   }
 
   @Post('upload/:id')
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: diskStorage({
-        destination: 'userimages',
-      }),
-    }),
-  )
-  uploadFile(
-    @UploadedFile() file: Express.Multer.File,
-    @Param('id') id: number,
-  ) {
-    console.log(file);
-    this.userService.addImage(id, file.filename);
+  uploadFile(@Param('id') id: number, @Body() updateImageDto: UpdateImageDto) {
+    return this.userService.addImage(id, updateImageDto);
   }
 
   @Get()
