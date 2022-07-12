@@ -10,7 +10,9 @@ import {
 import { FollowService } from './follow.service';
 import { CreateFollowDto } from './dto/create-follow.dto';
 import { UpdateFollowDto } from './dto/update-follow.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('follow')
 @Controller('follow')
 export class FollowController {
   constructor(private readonly followService: FollowService) {}

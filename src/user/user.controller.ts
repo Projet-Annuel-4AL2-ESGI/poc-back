@@ -23,7 +23,7 @@ import { JwtStrategy } from "../auth/strategy/jwt.strategy";
 import { JwtAuthGuard } from "../auth/guard/jwt-auth.guard";
 import { ApiTags } from "@nestjs/swagger";
 
-@ApiTags('users')
+@ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(
