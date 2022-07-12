@@ -5,6 +5,10 @@ export class CreatePostDto {
   @ApiProperty()
   type: string;
   @ApiProperty()
+  id?: number;
+  @ApiProperty()
+  userId?: number;
+  @ApiProperty()
   title: string;
   @ApiProperty()
   description: string;
