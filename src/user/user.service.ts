@@ -9,7 +9,7 @@ import { GetUsers } from './dto/get-users';
 import { Follow } from '../follow/entities/follow.entity';
 import { GetUsersFollow } from './dto/get-users-follow';
 import { GetUserProfile } from './dto/get-user-profile';
-import { UpdateImageDto } from "./dto/update-image.dto";
+import { UpdateImageDto } from './dto/update-image.dto';
 
 @Injectable()
 export class UserService {
