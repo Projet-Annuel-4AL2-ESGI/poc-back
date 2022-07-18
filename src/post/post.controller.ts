@@ -25,6 +25,11 @@ export class PostController {
     return this.postService.findAll();
   }
 
+  @Get('/exo')
+  findExo() {
+    return this.postService.findExo();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.postService.findOne(+id);

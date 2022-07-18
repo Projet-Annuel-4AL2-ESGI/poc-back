@@ -6,8 +6,8 @@ import { Repository } from 'typeorm';
 import { Post } from './entities/post.entity';
 import { User } from '../user/entities/user.entity';
 import { GetPostDto } from './dto/get-post.dto';
-import { Like } from "../likes/entities/like.entity";
-import { GetPostLikesDto } from "./dto/get-post-likes.dto";
+import { Like } from '../likes/entities/like.entity';
+import { GetPostLikesDto } from './dto/get-post-likes.dto';
 
 @Injectable()
 export class PostService {
@@ -34,7 +34,7 @@ export class PostService {
   }
 
   async findAllLikes(id: number) {
-    const posts = await this.postRepository.find( {
+    const posts = await this.postRepository.find({
       order: { id: 'DESC' },
     });
     const likes = await this.likeRepository.find({
@@ -56,6 +56,16 @@ export class PostService {
   async findOne(id: number) {
     const post = await this.postRepository.findOne(id);
     return await this.mapPostToGet(post);
+  }
+
+  async findExo() {
+    const posts = await this.postRepository.find({ where: { type: 'exo' } });
+    const postExo: GetPostDto[] = [];
+    for (const post of posts) {
+      const posttemp = await this.mapPostToGet(post);
+      postExo.push(posttemp);
+    }
+    return postExo;
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
