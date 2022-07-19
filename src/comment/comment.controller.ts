@@ -33,6 +33,11 @@ export class CommentController {
     return this.commentService.findOne(+id);
   }
 
+  @Get('post/:id')
+  findAllByPostId(@Param('id') id: number) {
+    return this.commentService.findAllByPostId(id);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCommentDto: UpdateCommentDto) {
     return this.commentService.update(+id, updateCommentDto);
