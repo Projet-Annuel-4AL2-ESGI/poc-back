@@ -106,6 +106,50 @@ export class UserService {
     return getUserProfile;
   }
 
+  async findFollowingsList(id: number) {
+    const followingList = await this.followRepository.find({
+      where: { follower: id },
+    });
+    const followingIds: number[] = [];
+    for (const following of followingList) {
+      followingIds.push(following.following);
+    }
+    const users = await this.userRepository.findByIds(followingIds);
+    const usersFiltered: GetUsersFollow[] = [];
+    users.forEach(function (user) {
+      const userTemp: GetUsersFollow = {
+        id: user.id,
+        username: user.username,
+        follow: false,
+        image: user.image,
+      };
+      usersFiltered.push(userTemp);
+    });
+    return usersFiltered;
+  }
+
+  async findFollowersList(id: number) {
+    const followingList = await this.followRepository.find({
+      where: { following: id },
+    });
+    const followingIds: number[] = [];
+    for (const following of followingList) {
+      followingIds.push(following.follower);
+    }
+    const users = await this.userRepository.findByIds(followingIds);
+    const usersFiltered: GetUsersFollow[] = [];
+    users.forEach(function (user) {
+      const userTemp: GetUsersFollow = {
+        id: user.id,
+        username: user.username,
+        follow: false,
+        image: user.image,
+      };
+      usersFiltered.push(userTemp);
+    });
+    return usersFiltered;
+  }
+
   findByMail(email: string) {
     return this.userRepository.findOne({
       where: { email: email },

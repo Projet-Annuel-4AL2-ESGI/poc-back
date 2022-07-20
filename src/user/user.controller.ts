@@ -8,19 +8,15 @@ import {
   Post,
   Res,
   StreamableFile,
-  UploadedFile, UseGuards,
+  UploadedFile,
+  UseGuards,
   UseInterceptors
 } from "@nestjs/common";
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
 import { createReadStream } from 'fs';
 import { join } from 'path';
-import * as fs from 'fs';
-import { JwtStrategy } from "../auth/strategy/jwt.strategy";
-import { JwtAuthGuard } from "../auth/guard/jwt-auth.guard";
 import { UpdateImageDto } from "./dto/update-image.dto";
 
 @Controller('user')
@@ -45,6 +41,16 @@ export class UserController {
   @Get('follow/:id')
   findFollow(@Param('id') id: number) {
     return this.userService.findFollows(id);
+  }
+
+  @Get('following/list/:id')
+  findFollowingList(@Param('id') id: number) {
+    return this.userService.findFollowingsList(id);
+  }
+
+  @Get('follow/list/:id')
+  findFollowList(@Param('id') id: number) {
+    return this.userService.findFollowersList(id);
   }
 
   @Get(':id')
