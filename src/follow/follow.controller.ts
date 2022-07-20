@@ -30,6 +30,11 @@ export class FollowController {
     return this.followService.findAllFollowingById(id);
   }
 
+  @Get('/isfollowing/:userid/:id')
+  findOneFollowerById(@Param('userid') userid: number, @Param('id') id: number) {
+    return this.followService.findOneFollowingById(userid, id);
+  }
+
   @Get('/followers/:id')
   findAllFollowersById(@Param('id') id: number) {
     return this.followService.findAllFollowersById(id);

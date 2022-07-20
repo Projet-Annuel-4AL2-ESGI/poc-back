@@ -29,6 +29,12 @@ export class FollowService {
     });
   }
 
+  findOneFollowingById(userId: number, id: number) {
+    return this.followRepository.find({
+      where: { following: id, follower: userId },
+    });
+  }
+
   findAllFollowersById(id: number) {
     return this.followRepository.find({
       where: { following: id },
