@@ -6,4 +6,5 @@ export class CreatePostDto {
   description: string;
   likes: number;
   image?: string;
+  exoId?: number;
 }

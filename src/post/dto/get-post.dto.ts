@@ -8,4 +8,5 @@ export class GetPostDto {
   likes: number;
   userImage?: string;
   image?: string;
+  exoId?: number;
 }

@@ -10,6 +10,7 @@ import { PostModule } from './post/post.module';
 import { AuthModule } from './auth/auth.module';
 import { LikesModule } from './likes/likes.module';
 import { CommentModule } from './comment/comment.module';
+import { ExoModule } from './exo/exo.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { CommentModule } from './comment/comment.module';
     PostModule,
     LikesModule,
     CommentModule,
+    ExoModule,
   ],
   controllers: [AppController],
   providers: [AppService],

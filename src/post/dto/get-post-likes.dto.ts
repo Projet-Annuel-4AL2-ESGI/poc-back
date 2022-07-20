@@ -9,4 +9,5 @@ export class GetPostLikesDto {
   userImage?: string;
   liked: boolean;
   image?: string;
+  exoId?: number;
 }

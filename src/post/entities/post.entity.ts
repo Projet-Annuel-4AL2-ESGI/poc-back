@@ -22,4 +22,7 @@ export class Post {
 
   @Column({ type: 'varchar', nullable: true })
   image: string;
+
+  @Column({ type: 'int', nullable: true})
+  exoId: number;
 }

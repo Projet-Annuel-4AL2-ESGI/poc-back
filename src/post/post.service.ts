@@ -102,6 +102,7 @@ export class PostService {
       likes: post.likes,
       userImage: userImage,
       image: post.image,
+      exoId: post.exoId,
     };
     return getPost;
   }
@@ -127,6 +128,7 @@ export class PostService {
       userImage: userImage,
       liked: false,
       image: post.image,
+      exoId: post.exoId,
     };
     return getPostLikes;
   }
