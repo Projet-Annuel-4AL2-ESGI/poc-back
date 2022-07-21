@@ -19,4 +19,7 @@ export class Exo {
 
   @Column({ type: 'varchar', nullable: false })
   exoCheck: string;
+
+  @Column({ type: 'varchar', nullable: false })
+  language: string;
 }

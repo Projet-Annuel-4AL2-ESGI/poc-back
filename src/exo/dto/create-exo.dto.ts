@@ -5,4 +5,5 @@ export class CreateExoDto {
   description: string;
   exoResponse: string;
   exoCheck: string;
+  language: string;
 }
