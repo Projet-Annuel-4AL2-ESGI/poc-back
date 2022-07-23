@@ -1,7 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from "@nestjs/common";
 import { ExoService } from './exo.service';
 import { CreateExoDto } from './dto/create-exo.dto';
 import { UpdateExoDto } from './dto/update-exo.dto';
+import { CreateCodeDto } from "../code/dto/create-code.dto";
+import { JwtAuthGuard } from "../auth/guard/jwt-auth.guard";
 
 @Controller('exo')
 export class ExoController {
@@ -10,6 +12,12 @@ export class ExoController {
   @Post()
   create(@Body() createExoDto: CreateExoDto) {
     return this.exoService.create(createExoDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/validate')
+  validate(@Body() createCodeDto: CreateCodeDto) {
+    return this.exoService.validateExo(createCodeDto);
   }
 
   @Get()
