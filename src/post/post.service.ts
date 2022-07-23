@@ -75,6 +75,7 @@ export class PostService {
       title: updatePostDto.title,
       description: updatePostDto.description,
       image: updatePostDto.image,
+      userId: updatePostDto.userId,
     });
   }
 
