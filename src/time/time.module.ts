@@ -8,5 +8,6 @@ import { Time } from './entities/time.entity';
   imports: [TypeOrmModule.forFeature([Time])],
   controllers: [TimeController],
   providers: [TimeService],
+  exports: [TimeService],
 })
 export class TimeModule {}

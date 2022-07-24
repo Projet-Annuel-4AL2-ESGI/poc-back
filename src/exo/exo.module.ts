@@ -3,10 +3,11 @@ import { ExoService } from './exo.service';
 import { ExoController } from './exo.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Exo } from './entities/exo.entity';
-import { CodeModule } from "../code/code.module";
+import { CodeModule } from '../code/code.module';
+import { TimeModule } from '../time/time.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Exo]), CodeModule],
+  imports: [TypeOrmModule.forFeature([Exo]), CodeModule, TimeModule],
   controllers: [ExoController],
   providers: [ExoService],
 })
