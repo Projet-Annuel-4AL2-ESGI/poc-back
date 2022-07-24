@@ -6,6 +6,8 @@ import { Exo } from './entities/exo.entity';
 import { Repository } from 'typeorm';
 import { CodeService } from '../code/code.service';
 import { CreateCodeDto } from '../code/dto/create-code.dto';
+import { performance } from 'perf_hooks';
+import { TimeService } from "../time/time.service";
 
 @Injectable()
 export class ExoService {
@@ -13,18 +15,22 @@ export class ExoService {
     @InjectRepository(Exo)
     private exoRepository: Repository<Exo>,
     private codeService: CodeService,
+    private timeService: TimeService,
   ) {}
   create(createExoDto: CreateExoDto) {
     return this.exoRepository.save(createExoDto);
   }
 
   async validateExo(createCodeDto: CreateCodeDto) {
+    const start = performance.now();
     const verify = await this.codeService.execCode(createCodeDto);
     let x = verify;
     if (createCodeDto.type == 'py') {
       x = x.replace(/\r?\n|\r/g, ' ');
       const y = x.split(' ');
       if (y[y.length - 2] == 'True') {
+        const end = performance.now();
+        await this.sendTime(createCodeDto, end - start);
         return 'True';
       } else {
         return verify;
@@ -39,11 +45,21 @@ export class ExoService {
       x = x.replace(/\r?\n|\r/g, ' ');
       const y = x.split(' ');
       if (y[y.length - 2] == 'true') {
+        const end = performance.now();
+        await this.sendTime(createCodeDto, end - start);
         return 'true';
       } else {
         return verify;
       }
     }
+  }
+
+  async sendTime(createCodeDto: CreateCodeDto, time: number) {
+    await this.timeService.create({
+      time: time / 1000,
+      exerciseId: createCodeDto.exerciseId,
+      userId: createCodeDto.userId,
+    });
   }
 
   findAll() {
