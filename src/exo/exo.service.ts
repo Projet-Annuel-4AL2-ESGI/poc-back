@@ -6,7 +6,6 @@ import { Exo } from './entities/exo.entity';
 import { Repository } from 'typeorm';
 import { CodeService } from '../code/code.service';
 import { CreateCodeDto } from '../code/dto/create-code.dto';
-import { ValidateExoDto } from "./dto/validate-exo.dto";
 
 @Injectable()
 export class ExoService {
@@ -22,19 +21,28 @@ export class ExoService {
   async validateExo(createCodeDto: CreateCodeDto) {
     const verify = await this.codeService.execCode(createCodeDto);
     let x = verify;
-    x = x.replace(/\r?\n|\r/g, ' ');
-    //console.log(x);
-    const y = x.split(' ');
-    //console.log('Test: ' + y[y.length - 2]);
-    //console.log('\nTrue' == x.substring(x.lastIndexOf('\n')));
-    if (y[y.length - 2] == 'True') {
-      /*const validateExo: ValidateExoDto = {
-        completed: true,
-        content: verify,
-      };*/
-      return 'True';
-    } else {
-      return verify;
+    if (createCodeDto.type == 'py') {
+      x = x.replace(/\r?\n|\r/g, ' ');
+      const y = x.split(' ');
+      if (y[y.length - 2] == 'True') {
+        return 'True';
+      } else {
+        return verify;
+      }
+    }
+    if (createCodeDto.type == 'js') {
+      if (x == true) {
+        return x;
+      } else if (x == false) {
+        return verify;
+      }
+      x = x.replace(/\r?\n|\r/g, ' ');
+      const y = x.split(' ');
+      if (y[y.length - 2] == 'true') {
+        return 'true';
+      } else {
+        return verify;
+      }
     }
   }
 

@@ -24,7 +24,9 @@ export class PostService {
   }
 
   async findAll() {
-    const posts = await this.postRepository.find();
+    const posts = await this.postRepository.find({
+      order: { id: 'DESC' },
+    });
     const getPosts: GetPostDto[] = [];
     for (const post of posts) {
       const getPost = await this.mapPostToGet(post);
