@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { LikesModule } from './likes/likes.module';
 import { CommentModule } from './comment/comment.module';
 import { ExoModule } from './exo/exo.module';
+import { TimeModule } from './time/time.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ExoModule } from './exo/exo.module';
     LikesModule,
     CommentModule,
     ExoModule,
+    TimeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
