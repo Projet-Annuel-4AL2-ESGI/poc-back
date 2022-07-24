@@ -4,6 +4,7 @@ import { UpdateCodeDto } from './dto/update-code.dto';
 import { promisify } from 'util';
 import { exec } from 'child_process';
 import * as fs from 'fs';
+import Axios from 'axios';
 
 @Injectable()
 export class CodeService {
@@ -16,14 +17,10 @@ export class CodeService {
   }
 
   async execCode(createCodeDto: CreateCodeDto) {
-    await fs.writeFileSync(
-      'exec/code.' + createCodeDto.type,
-      createCodeDto.content,
-    );
     if (createCodeDto.type == 'py') {
-      return await this.run_shell_command('python exec/code.py');
+      return await this.make_post_request_python(createCodeDto);
     } else if (createCodeDto.type == 'js') {
-      return await this.run_shell_command('node exec/code.js');
+      return await this.make_post_request_js(createCodeDto);
     }
   }
 
@@ -50,5 +47,36 @@ export class CodeService {
     if (Error[Symbol.hasInstance](result)) return result.stderr;
 
     return result.stdout;
+  }
+  async make_post_request_js(createCodeDto: CreateCodeDto) {
+    let response: any = '';
+    try {
+      response = await Axios.post(
+        'http://localhost:5999/code/exec',
+        createCodeDto,
+      ).then(function (response) {
+        return response.data;
+      });
+    } catch (er) {
+      console.log(er);
+    }
+    console.log('JS:' + response);
+    return response;
+  }
+
+  async make_post_request_python(createCodeDto: CreateCodeDto) {
+    let response: any = '';
+    try {
+      response = await Axios.post(
+        'http://localhost:5998/code/exec',
+        createCodeDto,
+      ).then(function (response) {
+        return response.data;
+      });
+    } catch (er) {
+      console.log(er);
+    }
+    console.log('Py:' + response);
+    return response;
   }
 }

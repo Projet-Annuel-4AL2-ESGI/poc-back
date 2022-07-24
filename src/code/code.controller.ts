@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { CodeService } from './code.service';
 import { CreateCodeDto } from './dto/create-code.dto';
 import { UpdateCodeDto } from './dto/update-code.dto';
+import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 
 @Controller('code')
 export class CodeController {
@@ -25,6 +27,7 @@ export class CodeController {
     return this.codeService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('exec')
   execCode(@Body() createCodeDto: CreateCodeDto) {
     return this.codeService.execCode(createCodeDto);
