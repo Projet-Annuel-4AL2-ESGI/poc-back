@@ -52,7 +52,7 @@ export class CodeService {
     let response: any = '';
     try {
       response = await Axios.post(
-        'http://localhost:5999/code/exec',
+        'https://pa-docker-js.herokuapp.com/code/exec',
         createCodeDto,
       ).then(function (response) {
         return response.data;
