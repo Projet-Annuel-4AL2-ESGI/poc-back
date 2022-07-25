@@ -38,17 +38,10 @@ export class ExoService {
     }
     if (createCodeDto.type == 'js') {
       if (x == true) {
-        return x;
-      } else if (x == false) {
-        return verify;
-      }
-      x = x.replace(/\r?\n|\r/g, ' ');
-      const y = x.split(' ');
-      if (y[y.length - 2] == 'true') {
         const end = performance.now();
         await this.sendTime(createCodeDto, end - start);
-        return 'true';
-      } else {
+        return x;
+      } else if (x == false) {
         return verify;
       }
     }
