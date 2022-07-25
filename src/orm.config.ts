@@ -1,18 +1,24 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-// export const config: TypeOrmModuleOptions = {
-//   type: 'postgres',
-//   username: 'postgres',
-//   password: 'admin',
-//   port: 5432,
-//   host: '127.0.0.1',
-//   database: 'poc_back',
-//   synchronize: true,
-//   entities: ['dist/**/*.entity{.ts,.js}'],
-// };
-export const config: TypeOrmModuleOptions = {
-  type: 'postgres',
-  url: process.env.DATABASE_URL,
-  synchronize: true,
-  ssl: { rejectUnauthorized: false },
-  entities: ['dist/**/*.entity{.ts,.js}'],
-};
+
+export const config = getConfig();
+
+function getConfig() {
+  if (process.env.PORT === undefined) {
+    const conf: TypeOrmModuleOptions = {
+      type: 'postgres',
+      url: process.env.DATABASE_URL,
+      synchronize: true,
+      entities: ['dist/**/*.entity{.ts,.js}'],
+    };
+    return conf;
+  } else {
+    const conf: TypeOrmModuleOptions = {
+      type: 'postgres',
+      url: process.env.DATABASE_URL,
+      synchronize: true,
+      ssl: { rejectUnauthorized: false },
+      entities: ['dist/**/*.entity{.ts,.js}'],
+    };
+    return conf;
+  }
+}
