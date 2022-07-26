@@ -19,12 +19,17 @@ export class TimeService {
         exerciseId: createTimeDto.exerciseId,
       })
       .then((value) => {
-        if (value != undefined && value.time > createTimeDto.time) {
-          return this.update(value.id, {
-            userId: value.userId,
-            exerciseId: value.exerciseId,
-            time: createTimeDto.time,
-          }).then();
+        if (value != undefined) {
+          if (value.time > createTimeDto.time) {
+            return this.timeRepository
+              .save({
+                id: value.id,
+                userId: createTimeDto.userId,
+                time: createTimeDto.time,
+                exerciseId: createTimeDto.exerciseId,
+              })
+              .then();
+          }
         } else {
           return this.timeRepository.save(createTimeDto);
         }
@@ -39,8 +44,13 @@ export class TimeService {
     return this.timeRepository.findOne(id);
   }
 
-  update(id: number, updateTimeDto: UpdateTimeDto): Promise<UpdateResult> {
-    return this.timeRepository.update(id, updateTimeDto);
+  update(id: number, updateTimeDto: UpdateTimeDto) {
+    return this.timeRepository.save({
+      id: id,
+      userId: updateTimeDto.userId,
+      time: updateTimeDto.time,
+      exerciseId: updateTimeDto.exerciseId,
+    });
   }
 
   async remove(id: number) {
