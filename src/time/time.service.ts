@@ -66,6 +66,7 @@ export class TimeService {
         const timesForUser = timesByUser.filter((value) => {
           return value[0] == time.userId;
         });
+        console.log(timesForUser)
         if (timesForUser.length > 0) {
           let found = false;
           timesByUser.forEach((value) => {
