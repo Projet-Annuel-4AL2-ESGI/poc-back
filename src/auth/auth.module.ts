@@ -13,6 +13,7 @@ import { LocalStrategy } from './strategy/local.strategy';
     PassportModule,
     JwtModule.register({
       secret: 'TESTESGITOKEN',
+      signOptions: { expiresIn: '24h' },
     }),
   ],
   controllers: [AuthController],
