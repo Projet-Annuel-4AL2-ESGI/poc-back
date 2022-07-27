@@ -49,13 +49,15 @@ export class UserService {
     let isItThere = false;
     if (follows.length === 0) {
       users.forEach(function (user) {
-        const userTemp: GetUsersFollow = {
-          id: user.id,
-          username: user.username,
-          follow: false,
-          image: user.image,
-        };
-        usersFiltered.push(userTemp);
+        if (user.id != id) {
+          const userTemp: GetUsersFollow = {
+            id: user.id,
+            username: user.username,
+            follow: false,
+            image: user.image,
+          };
+          usersFiltered.push(userTemp);
+        }
       });
     } else {
       users.forEach(function (user) {
