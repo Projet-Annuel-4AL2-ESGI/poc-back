@@ -2,13 +2,14 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from "@n
 import { ExoService } from './exo.service';
 import { CreateExoDto } from './dto/create-exo.dto';
 import { UpdateExoDto } from './dto/update-exo.dto';
-import { CreateCodeDto } from "../code/dto/create-code.dto";
-import { JwtAuthGuard } from "../auth/guard/jwt-auth.guard";
+import { CreateCodeDto } from '../code/dto/create-code.dto';
+import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 
 @Controller('exo')
 export class ExoController {
   constructor(private readonly exoService: ExoService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createExoDto: CreateExoDto) {
     return this.exoService.create(createExoDto);
