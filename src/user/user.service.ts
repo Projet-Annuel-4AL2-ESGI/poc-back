@@ -80,7 +80,7 @@ export class UserService {
         isItThere = false;
       });
     }
-    return usersFiltered;
+    return usersFiltered.sort(() => Math.random() - Math.random()).slice(0, 5);
   }
 
   findOne(id: number) {
