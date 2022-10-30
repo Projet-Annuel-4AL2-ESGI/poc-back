@@ -18,7 +18,9 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { createReadStream } from 'fs';
 import { join } from 'path';
 import { UpdateImageDto } from "./dto/update-image.dto";
+import {ApiTags} from "@nestjs/swagger";
 
+@ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}

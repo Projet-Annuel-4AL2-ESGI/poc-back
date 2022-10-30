@@ -33,6 +33,7 @@ export class UserService {
       const userTemp: GetUsers = {
         id: user.id,
         username: user.username,
+        email: user.email,
         image: user.image,
       };
       usersFiltered.push(userTemp);

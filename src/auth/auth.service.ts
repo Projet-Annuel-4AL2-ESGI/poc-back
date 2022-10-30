@@ -25,8 +25,11 @@ export class AuthService {
     const userLogged = await this.userService.findByMail(user);
     console.log(user);
     const payload = { name: userLogged.username, id: userLogged.id };
-    return {
+    const response = {
+      //userId: userLogged.id,
       access_token: this.jwtService.sign(payload),
     };
+    console.log("❤️ reponse login", response)
+    return response;
   }
 }

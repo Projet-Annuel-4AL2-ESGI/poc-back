@@ -4,7 +4,9 @@ import { CreateExoDto } from './dto/create-exo.dto';
 import { UpdateExoDto } from './dto/update-exo.dto';
 import { CreateCodeDto } from '../code/dto/create-code.dto';
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
+import {ApiTags} from "@nestjs/swagger";
 
+@ApiTags('exo')
 @Controller('exo')
 export class ExoController {
   constructor(private readonly exoService: ExoService) {}
